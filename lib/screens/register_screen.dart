@@ -34,34 +34,77 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       appBar: AppBar(title: Text('Register')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
+        padding: const EdgeInsets.all(50.0),
+        child: SingleChildScrollView(
+          child: Column(
           children: [
             TextField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Nama')),
+                decoration: InputDecoration(
+                  labelText: 'Nama',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                )
+            ),
+            SizedBox(height: 10,),
             TextField(
                 controller: _addressController,
-                decoration: InputDecoration(labelText: 'Alamat')),
+                decoration: InputDecoration(
+                  labelText: 'Alamat',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                )
+            ),
+            SizedBox(height: 10,),
             TextField(
                 controller: _companyController,
-                decoration: InputDecoration(labelText: 'Perusahaan')),
+                decoration: InputDecoration(
+                  labelText: 'Perusahaan',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                )
+            ),
+            SizedBox(height: 10,),
             TextField(
                 controller: _phoneController,
-                decoration: InputDecoration(labelText: 'Nomor HP')),
+                decoration: InputDecoration(
+                  labelText: 'Nomor HP',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                )
+            ),
+            SizedBox(height: 10,),
             TextField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'Email')),
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                )
+            ),
+            SizedBox(height: 10,),
             TextField(
                 controller: _passwordController,
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true),
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                ),
+                obscureText: true
+            ),
+            SizedBox(height: 20,),
             ElevatedButton(
               onPressed: _register,
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
               child: Text('Register'),
             ),
           ],
         ),
+        )
       ),
     );
   }
