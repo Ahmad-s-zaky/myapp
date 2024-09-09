@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/screens/dashboard_screen.dart';
 import 'package:myapp/screens/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -34,7 +35,7 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 40),
-          buttonLogin(),
+          buttonLogin(context),
           createAccount(context),
         ],
       ),
@@ -57,9 +58,16 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  ElevatedButton buttonLogin() {
+  ElevatedButton buttonLogin(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const DashboardScreen(),
+            ),
+          );
+        },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.black,
         shape: RoundedRectangleBorder(
