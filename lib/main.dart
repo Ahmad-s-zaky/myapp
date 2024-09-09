@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/routing.dart';
+import 'package:myapp/screens/login_screen.dart';
 
 void main() {
   runApp(const MonjaApp());
@@ -10,11 +10,9 @@ class MonjaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Login Register App',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      onGenerateRoute: generateRoute,
-      initialRoute: '/login',
+    return const MaterialApp(
+      home: LoginScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
