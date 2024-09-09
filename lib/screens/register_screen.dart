@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/login_screen.dart'; // Assuming LoginScreen exists
+import 'package:myapp/screens/login_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -85,8 +85,6 @@ class RegisterScreen extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              // Implement registration logic here
-              // For example, you can validate input, send data to a server, etc.
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginScreen()),
