@@ -17,6 +17,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _alamatController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _obsecureText = true;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obsecureText = !_obsecureText;
+    });
+  }
   final TextEditingController _noTelponController = TextEditingController();
   final TextEditingController _companyController = TextEditingController();
 
@@ -37,8 +44,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: jsonEncode(newUser.toJson()),
       );
       if (response.statusCode == 200) {
-        Navigator.pushNamed(context, '/login');
+        
+        Navigator.pushNamed(context, '/activation');
       } else {
+        // ignore: avoid_print
         print('Registrasi gagal: ${response.body}');
       }
     }
@@ -148,6 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           const SizedBox(height: 10),
           TextFormField(
             controller: _passwordController,
+            obscureText: _obsecureText,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(15),
               filled: true,
@@ -155,6 +165,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               labelText: 'Password',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
+              ),
+              suffixIcon: IconButton(
+                iconSize: 20,
+                icon: Icon(
+                  _obsecureText ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: _togglePasswordVisibility,
               ),
             ),
             validator: (value) {

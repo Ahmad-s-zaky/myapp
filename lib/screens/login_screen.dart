@@ -14,6 +14,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  bool _obsecureText = true;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obsecureText = !_obsecureText;
+    });
+  }
 
   Future<void> _loginUser() async {
     if (_formKey.currentState!.validate()) {
@@ -126,15 +133,22 @@ class _LoginScreenState extends State<LoginScreen> {
         const SizedBox(height: 20),
         TextFormField(
           controller: _passwordController,
+          obscureText: _obsecureText,
           decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(15),
-            filled: true,
-            fillColor: Colors.white,
-            labelText: 'Password',
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-          ),
+              contentPadding: const EdgeInsets.all(15),
+              filled: true,
+              fillColor: Colors.white,
+              labelText: 'Password',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              suffixIcon: IconButton(
+                iconSize: 20,
+                icon: Icon(
+                  _obsecureText ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: _togglePasswordVisibility,
+              )),
           validator: (value) {
             if (value == null || value.isEmpty) {
               return 'Isi password Anda';
