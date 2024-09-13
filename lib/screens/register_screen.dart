@@ -1,16 +1,58 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class RegisterScreen extends StatelessWidget {
+import '../models/user.dart';
+
+class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _alamatController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _noTelponController = TextEditingController();
+  final TextEditingController _companyController = TextEditingController();
+
+  Future<void> _registerUser() async {
+    if (_formKey.currentState!.validate()) {
+      User newUser = User(
+        nama: _namaController.text,
+        alamat: _alamatController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+        noTelpon: _noTelponController.text,
+        company: _companyController.text,
+      );
+      var url = Uri.parse("");
+      var response = await http.post(
+        url,
+        headers: {'Content-type': 'application/json'},
+        body: jsonEncode(newUser.toJson()),
+      );
+      if (response.statusCode == 200) {
+        Navigator.pushNamed(context, '/login');
+      } else {
+        print('Registrasi gagal: ${response.body}');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
         padding: const EdgeInsets.all(50),
-        children: [
+        children: <Widget>[
           const SizedBox(height: 30),
-          TextField(
+          TextFormField(
+            controller: _namaController,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(15),
               filled: true,
@@ -20,9 +62,16 @@ class RegisterScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Isi nama lengkap Anda';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 10),
-          TextField(
+          TextFormField(
+            controller: _alamatController,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(15),
               filled: true,
@@ -32,9 +81,16 @@ class RegisterScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Isi alamat Anda';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 10),
-          TextField(
+          TextFormField(
+            controller: _noTelponController,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(15),
               filled: true,
@@ -44,9 +100,16 @@ class RegisterScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Isi nomor telpon Anda';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 10),
-          TextField(
+          TextFormField(
+            controller: _companyController,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(15),
               filled: true,
@@ -56,9 +119,16 @@ class RegisterScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Isi company Anda';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 10),
-          TextField(
+          TextFormField(
+            controller: _emailController,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(15),
               filled: true,
@@ -68,9 +138,16 @@ class RegisterScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Isi email Anda';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 10),
-          TextField(
+          TextFormField(
+            controller: _passwordController,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.all(15),
               filled: true,
@@ -80,11 +157,17 @@ class RegisterScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Isi password Anda';
+              }
+              return null;
+            },
           ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, '/login');
+              _registerUser();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.black,

@@ -14,4 +14,26 @@ class User {
     required this.noTelpon,
     required this.company,
   });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      nama: json['nama'],
+      alamat: json['alamat'],
+      email: json['email'],
+      password: json['password'],
+      noTelpon: json['noTelpon'],
+      company: json['company'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'nama': nama,
+      'alamat': alamat,
+      'email': email,
+      'password': password,
+      'noTelpon': noTelpon,
+      'company': company,
+    };
+  }
 }

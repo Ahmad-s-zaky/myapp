@@ -1,7 +1,38 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class LoginScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  Future<void> _loginUser() async {
+    if (_formKey.currentState!.validate()) {
+      var url = Uri.parse("");
+      var response = await http.post(
+        url,
+        headers: {'Content-type': 'application/json'},
+        body: jsonEncode({
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        }),
+      );
+      if (response.statusCode == 200) {
+        Navigator.pushNamed(context, '/dashboard');
+      } else {
+        print('Login gagal: ${response.body}');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +85,7 @@ class LoginScreen extends StatelessWidget {
   ElevatedButton buttonLogin(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
-        Navigator.pushNamed(context, '/dashboard');
+        _loginUser();
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.black,
@@ -73,8 +104,9 @@ class LoginScreen extends StatelessWidget {
   Column _formInput() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        TextField(
+      children: <Widget>[
+        TextFormField(
+          controller: _emailController,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(15),
             filled: true,
@@ -84,9 +116,16 @@ class LoginScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Isi email Anda';
+            }
+            return null;
+          },
         ),
         const SizedBox(height: 20),
-        TextField(
+        TextFormField(
+          controller: _passwordController,
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(15),
             filled: true,
@@ -96,6 +135,12 @@ class LoginScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Isi password Anda';
+            }
+            return null;
+          },
         )
       ],
     );
