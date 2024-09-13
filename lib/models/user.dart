@@ -1,10 +1,10 @@
 class User {
-  String nama;
-  String alamat;
-  String email;
-  String password;
-  String noTelpon;
-  String company;
+  final String? nama;
+  final String? alamat;
+  final String? email;
+  final String? password;
+  final String? noTelpon;
+  final String? company;
 
   User({
     required this.nama,

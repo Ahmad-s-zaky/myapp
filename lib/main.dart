@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/login_screen.dart';
+
+import 'routing/router.dart';
 
 void main() {
   runApp(const MonjaApp());
@@ -11,7 +12,9 @@ class MonjaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: LoginScreen(),
+      title: 'Monja Login-Register',
+      initialRoute: '/',
+      onGenerateRoute: AppRouter.generateRoute,
       debugShowCheckedModeBanner: false,
     );
   }
